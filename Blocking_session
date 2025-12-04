@@ -1,0 +1,30 @@
+SET LINES 200 PAGES 100 TRIMSPOOL ON
+
+COLUMN blocker_sid FORMAT 99999
+COLUMN blocker_serial FORMAT 99999
+COLUMN blocked_sid FORMAT 99999
+COLUMN blocked_serial FORMAT 99999
+COLUMN blocker_user FORMAT A15
+COLUMN blocked_user FORMAT A15
+COLUMN blocker_prog FORMAT A30
+COLUMN blocked_prog FORMAT A30
+
+SELECT bs.sid      AS blocker_sid,
+       bs.serial#  AS blocker_serial,
+       bs.username AS blocker_user,
+       bs.program  AS blocker_prog,
+       ws.sid      AS blocked_sid,
+       ws.serial#  AS blocked_serial,
+       ws.username AS blocked_user,
+       ws.program  AS blocked_prog,
+       lo.block    AS lock_type
+FROM   v$session bs
+JOIN   v$lock bl
+  ON   bs.sid = bl.sid
+JOIN   v$lock lo
+  ON   bl.id1 = lo.id1
+JOIN   v$session ws
+  ON   lo.sid = ws.sid
+WHERE  bl.block = 1
+AND    bs.sid != ws.sid
+ORDER BY bs.sid;
