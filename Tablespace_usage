@@ -1,0 +1,25 @@
+SET LINES 200 PAGES 100 TRIMSPOOL ON FEEDBACK OFF VERIFY OFF
+COLUMN tablespace_name FORMAT A25
+COLUMN used_gb FORMAT 9990.00
+COLUMN total_gb FORMAT 9990.00
+COLUMN pct_used FORMAT 990.00
+
+SELECT tablespace_name,
+       ROUND(used_mb/1024, 2)  AS used_gb,
+       ROUND(total_mb/1024, 2) AS total_gb,
+       ROUND(used_mb*100/total_mb, 2) AS pct_used
+FROM (
+    SELECT d.tablespace_name,
+           SUM(d.bytes)/1024/1024 AS total_mb,
+           SUM(d.bytes - NVL(f.bytes,0))/1024/1024 AS used_mb
+    FROM dba_data_files d
+    LEFT JOIN (
+        SELECT tablespace_name, file_id, SUM(bytes) bytes
+        FROM dba_free_space
+        GROUP BY tablespace_name, file_id
+    ) f
+    ON d.file_id = f.file_id
+   AND d.tablespace_name = f.tablespace_name
+    GROUP BY d.tablespace_name
+)
+ORDER BY pct_used DESC;
