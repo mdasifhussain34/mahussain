@@ -1,0 +1,10 @@
+SET LINESIZE 200
+COLUMN owner FORMAT A20
+COLUMN invalid_objects FORMAT 999999
+
+SELECT owner,
+       COUNT(*) AS invalid_objects
+FROM   dba_objects
+WHERE  status='INVALID'
+GROUP  BY owner
+ORDER  BY 2 DESC;
