@@ -1,0 +1,6 @@
+SET LINES 200 PAGES 100
+SELECT sid, serial#, username, opname,
+       ROUND(elapsed_seconds/3600,2) AS hours_running
+FROM v$session_longops
+WHERE elapsed_seconds > 3600
+ORDER BY elapsed_seconds DESC;
