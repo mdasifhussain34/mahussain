@@ -1,0 +1,26 @@
+SET LINESIZE 220
+SET PAGESIZE 100
+SET TRIMSPOOL ON
+SET TAB OFF
+
+COLUMN sql_id       FORMAT A13              HEADING 'SQL_ID'
+COLUMN cpu_time     FORMAT 999,999,999      HEADING 'CPU_TIME'
+COLUMN executions   FORMAT 999,999,999      HEADING 'EXEC'
+COLUMN cpu_per_exec FORMAT 999,999,999.99   HEADING 'CPU/EXEC'
+COLUMN sql_text     FORMAT A80 TRUNC        HEADING 'SQL_TEXT'
+
+SELECT sql_id,
+       cpu_time,
+       executions,
+       ROUND(cpu_time / NULLIF(executions,0), 2) AS cpu_per_exec,
+       SUBSTR(REPLACE(sql_text, CHR(10), ' '), 1, 80) AS sql_text
+FROM (
+    SELECT sql_id,
+           cpu_time,
+           executions,
+           sql_text
+    FROM   v$sql
+    WHERE  last_active_time > SYSDATE - 1/24
+    ORDER  BY cpu_time DESC
+)
+WHERE ROWNUM <= 10;
