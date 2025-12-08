@@ -1,0 +1,19 @@
+SET LINES 200
+SET PAGES 100
+
+COLUMN owner FORMAT A20
+COLUMN job_name FORMAT A30
+COLUMN state FORMAT A15
+
+SELECT
+    owner,
+    job_name,
+    state,
+    failure_count,
+    last_start_date,
+    last_run_duration,
+    additional_info
+FROM   dba_scheduler_jobs
+WHERE  state = 'BROKEN'
+   OR  failure_count > 0
+ORDER  BY failure_count DESC, last_start_date DESC;
