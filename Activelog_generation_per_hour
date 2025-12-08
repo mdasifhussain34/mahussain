@@ -1,0 +1,14 @@
+SET LINES 200
+SET PAGES 100
+
+COLUMN hour FORMAT A19
+COLUMN logs_generated FORMAT 9999
+COLUMN mb_generated FORMAT 999999
+
+SELECT
+    TRUNC(first_time, 'HH24') AS hour,
+    COUNT(*)                  AS logs_generated,
+    ROUND(SUM(blocks * block_size) / 1024 / 1024) AS mb_generated
+FROM   v$archived_log
+GROUP  BY TRUNC(first_time, 'HH24')
+ORDER  BY hour DESC;
