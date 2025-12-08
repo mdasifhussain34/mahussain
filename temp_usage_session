@@ -1,0 +1,13 @@
+SET LINES 200
+COLUMN username FORMAT A20
+COLUMN program FORMAT A30
+
+SELECT s.username,
+       s.sid,
+       s.serial#,
+       s.program,
+       t.blocks * ts.block_size / 1024/1024 AS temp_mb
+FROM   v$session s
+JOIN   v$sort_usage t ON s.saddr = t.session_addr
+JOIN   dba_tablespaces ts ON t.tablespace = ts.tablespace_name
+ORDER BY temp_mb DESC;
