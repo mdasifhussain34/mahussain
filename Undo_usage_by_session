@@ -1,0 +1,17 @@
+SET LINES 200
+SET PAGES 100
+
+COLUMN username FORMAT A20
+
+SELECT
+    s.sid,
+    s.serial#,
+    s.username,
+    s.machine,
+    t.used_ublk * TO_NUMBER(p.value) / 1024 / 1024 AS undo_mb
+FROM   v$transaction t
+JOIN   v$session s
+       ON t.ses_addr = s.saddr
+JOIN   v$parameter p
+       ON p.name = 'db_block_size'
+ORDER  BY undo_mb DESC;
