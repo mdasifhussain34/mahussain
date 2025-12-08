@@ -1,0 +1,16 @@
+SET LINES 200
+COL username FORMAT A15
+COL machine FORMAT A25
+COL program FORMAT A35
+
+SELECT sid,
+       serial#,
+       username,
+       status,
+       osuser,
+       machine,
+       program,
+       logon_time
+FROM   v$session
+WHERE  type='USER'
+ORDER BY logon_time DESC;
