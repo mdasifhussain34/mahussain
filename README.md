@@ -22,6 +22,7 @@ All scripts are tested on **Oracle 19c** and compatible with 12c+.
 | `Failed or Broken_Scheduler_job` | Report broken or failed DB scheduler jobs |
 | `Activelog_generation_per_hour` | Review archive log generation trend by hour |
 | `oracle_backup.sh` | Automates Oracle database backup using RMAN and logs execution |
+| `tablespace_alert.sh` | Alerts when tablespace usage exceeds defined threshold using SQL and shell automation |
 
 ---
 
