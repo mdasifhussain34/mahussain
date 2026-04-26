@@ -24,6 +24,7 @@ All scripts are tested on **Oracle 19c** and compatible with 12c+.
 | `oracle_backup.sh` | Automates Oracle database backup using RMAN and logs execution |
 | `tablespace_alert.sh` | Alerts when tablespace usage exceeds defined threshold using SQL and shell automation |
 | `index_rebuild.sql` | Identifies fragmented indexes and generates rebuild commands |
+| `kill_blocking_sessions.sql` | Identifies blocking sessions and generates kill commands |
 
 ---
 
