@@ -25,6 +25,7 @@ All scripts are tested on **Oracle 19c** and compatible with 12c+.
 | `tablespace_alert.sh` | Alerts when tablespace usage exceeds defined threshold using SQL and shell automation |
 | `index_rebuild.sql` | Identifies fragmented indexes and generates rebuild commands |
 | `kill_blocking_sessions.sql` | Identifies blocking sessions and generates kill commands |
+| `archive_log_cleanup.sh` | Cleans old Oracle archive logs using RMAN to manage disk space |
 
 ---
 
