@@ -19,3 +19,4 @@ EXIT;
 EOF
 
 echo "Archive log cleanup completed at $(date)" >> $LOG_FILE
+
