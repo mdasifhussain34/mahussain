@@ -26,6 +26,7 @@ All scripts are tested on **Oracle 19c** and compatible with 12c+.
 | `index_rebuild.sql` | Identifies fragmented indexes and generates rebuild commands |
 | `kill_blocking_sessions.sql` | Identifies blocking sessions and generates kill commands |
 | `archive_log_cleanup.sh` | Cleans old Oracle archive logs using RMAN to manage disk space |
+| `db_refresh_clone.sh` | Automates Oracle database refresh and restore operations |
 
 ---
 
